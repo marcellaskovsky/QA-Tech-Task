@@ -1,7 +1,14 @@
 {
   "sql_injection": {
     "enabled": true,
-    "signatures": ["UNION", "SELECT", "DROP TABLE", "--", "'"]
+    "use_regex": true,
+    "signatures": [
+      "\\bUNION\\b.*\\bSELECT\\b",
+      "\\bDROP\\s+TABLE\\b",
+      "\\bSELECT\\b.*\\bFROM\\b",
+      "--\\s*$",
+      "'\\s*(OR|AND)\\s*'?\\d*'?\\s*=\\s*'?\\d*"
+    ]
   },
   "directory_traversal": {
     "enabled": true,

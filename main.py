@@ -28,10 +28,11 @@ def parse_web_timestamp(ts: str) -> datetime:
 def parse_auth_timestamp(ts: str, forced_year: int = DEFAULT_LOG_YEAR) -> datetime:
     """
     Parses syslog-style timestamp without a year, e.g. 'Jul  3 10:00:03',
-    and forces a fixed year so it aligns with webserver.log timestamps.
+    by prepending the forced year to the string before parsing.
+    This avoids relying on strptime's implicit default-year behavior
+    (which triggers a DeprecationWarning in newer Python versions).
     """
-    parsed = datetime.strptime(ts, "%b %d %H:%M:%S")
-    return parsed.replace(year=forced_year)
+    return datetime.strptime(f"{forced_year} {ts}", "%Y %b %d %H:%M:%S")
 
 
 def build_rules(rules_config: dict) -> dict:

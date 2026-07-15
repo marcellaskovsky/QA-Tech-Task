@@ -1,3 +1,4 @@
+import re
 import json
 import logging
 from abc import ABC, abstractmethod
@@ -39,16 +40,22 @@ class BaseRule(ABC):
 
 
 class SQLInjectionRule(BaseRule):
+    def __init__(self, config: Dict[str, Any]):
+        super().__init__(config)
+        self.patterns = [
+            re.compile(sig, re.IGNORECASE) for sig in self.config.get("signatures", [])
+        ]
+
     def evaluate(self, entry) -> Optional[Incident]:
         if not self.enabled or not hasattr(entry, "path"):
             return None
-        for signature in self.config.get("signatures", []):
-            if signature.lower() in entry.path.lower():
+        for pattern in self.patterns:
+            if pattern.search(entry.path):
                 return Incident(
                     rule_name="sql_injection",
                     severity="high",
                     ip=entry.ip,
-                    description=f"SQL injection signature '{signature}' found in path: {entry.path}",
+                    description=f"SQL injection pattern matched in path: {entry.path}",
                     raw_entry=entry,
                 )
         return None
