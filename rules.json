@@ -1,0 +1,21 @@
+{
+  "sql_injection": {
+    "enabled": true,
+    "signatures": ["UNION", "SELECT", "DROP TABLE", "--", "'"]
+  },
+  "directory_traversal": {
+    "enabled": true,
+    "signatures": ["../", "..%2f", "..\\"]
+  },
+  "brute_force_web": {
+    "enabled": true,
+    "max_failed_logins": 3,
+    "time_window_seconds": 60,
+    "target_status_codes": [401, 403]
+  },
+  "brute_force_ssh": {
+    "enabled": true,
+    "max_failed_logins": 3,
+    "time_window_seconds": 60
+  }
+}
