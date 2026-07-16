@@ -154,15 +154,3 @@ def read_auth_log(file_path: str) -> Iterator[AuthLogEntry]:
     except OSError as e:
         logger.error("Error reading file %s: %s", file_path, e)
 
-
-# =====================================================================
-# TEST LOKALNY 
-# =====================================================================
-if __name__ == "__main__":
-    print("--- TESTING WEBSERVER PARSER ---")
-    for web_entry in read_webserver_log("webserver.log"):
-        print(web_entry)
-        
-    print("\n--- TESTING AUTH PARSER ---")
-    for auth_entry in read_auth_log("auth.log"):
-        print(auth_entry)

@@ -1,4 +1,14 @@
+# Srodowisko wirtualne Pythona
 venv/
+.venv/
+env/
+
+# Cache Pythona
 __pycache__/
-*.pyc
+*.pyc 
+
+# Cache Pytesta
 .pytest_cache/
+
+# Pliki konfiguracyjne VS Code
+.vscode/
